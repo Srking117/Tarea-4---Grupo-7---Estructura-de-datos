@@ -35,7 +35,8 @@ typedef enum EstadoPvv {       // Códigos de estado generales para las operacio
 	PVV_ERROR_YA_INICIADO,            // Ya existe un grafo iniciado
 	PVV_ERROR_NO_INICIADO,            // No hay grafo iniciado
 	PVV_ERROR_CANTIDAD_NODOS_INVALIDA,// Número de nodos fuera de rango
-	PVV_ERROR_MEMORIA                 // Error al reservar memoria
+	PVV_ERROR_MEMORIA,                 // Error al reservar memoria
+	PVV_ERROR_ARCHIVO                 // Error al leer archivo
 } EstadoPvv;
 
 // ----------------- Funciones auxiliares -----------------
