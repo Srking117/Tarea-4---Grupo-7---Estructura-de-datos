@@ -1,0 +1,13 @@
+# --- Archivos compilados (Basura) ---
+*.o
+*.exe
+*.out
+pvv_app
+
+# --- Archivos temporales del sistema ---
+.DS_Store
+Thumbs.db
+
+# --- Carpetas de configuración de editores ---
+.vscode/
+.idea/
