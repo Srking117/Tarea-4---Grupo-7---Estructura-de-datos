@@ -5,6 +5,7 @@
 #include "memory_manager.h" // Para pvv_start, pvv_exit
 #include "file_reader.h"    // Para pvv_read
 #include "interface.h"      // Para mostrar mensajes
+#include "hamiltonian.h"    // Verificacion de ciclo hamiltoniano
 
 #define BUFFER_SIZE 256
 
@@ -50,21 +51,31 @@ void loop_principal(ContextoPvv *contexto) {
         else if (strcmp(cmd, "read") == 0) {
             char *filename = strtok(NULL, " ");
             if (filename) {
-                interface_imprimir_linea("Agregando enlaces desde archivo."); 
+                interface_imprimir_linea("Agregando enlaces desde archivo.");
                 int res = pvv_read(contexto, filename);
                 if (res == PVV_ERROR_NO_INICIADO) {
                     interface_mostrar_mensaje(PVV_ERROR_NO_INICIADO);
                 } else if (res == PVV_ERROR_ARCHIVO) {
                     interface_imprimir_linea("Error: No se pudo abrir el archivo.");
                 } else {
-                   // Aquí iría la lógica de verificación de ruta (Parte 3)
-                   // Como aun no existe la parte 3, por ahora solo leemos.
-                   interface_imprimir_linea("Verificando que existe una ruta...");
+                    interface_imprimir_linea("Verificando que existe una ruta...");
+
+                    Grafo *grafo = contexto->grafo_actual;
+                    if (hamiltoniano_tiene_ciclo(grafo)) {
+                        interface_imprimir_linea(
+                            "Existe un camino que recorre todas las ciudades y regresa a la ciudad de origen."
+                        );
+                    } else {
+                        interface_imprimir_linea(
+                            "No existe un camino que recorra todas las ciudades y regrese a la ciudad de origen."
+                        );
+                    }
                 }
             } else {
                 interface_imprimir_linea("Falta nombre de archivo: read <archivo>");
             }
-        }
+        }           
+
         else if (strcmp(cmd, "graph") == 0) {
             if (contexto->grafo_actual) {
                 interface_mostrar_grafo(contexto->grafo_actual);
